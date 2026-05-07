@@ -37,8 +37,8 @@ jobs:
       - name: Send email
         run: |
           python ./.github/actions/send_email.py \
-            "${{ secrets.GMAIL_USERNAME }}" \
-            "${{ secrets.GMAIL_PASSWORD }}" \
+            "${{ secrets.FOXMAIL_USERNAME }}" \
+            "${{ secrets.FOXMAIL_PASSWORD }}" \
             "fingsinz@foxmail.com" \
             "Tech Trending Daily" \
             ${{ steps.trending.outputs.trendingData }}
