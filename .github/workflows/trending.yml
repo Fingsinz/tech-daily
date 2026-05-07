@@ -1,4 +1,4 @@
-name: Send Tech Trending Daily via Gmail
+name: Send Tech Trending Daily via Email
 
 on:
   schedule:
@@ -37,8 +37,9 @@ jobs:
       - name: Send email
         run: |
           python ./.github/actions/send_email.py \
-            "${{ secrets.FOXMAIL_USERNAME }}" \
-            "${{ secrets.FOXMAIL_PASSWORD }}" \
+            "${{ secrets.EMAIL_USENAME }}" \
+            "${{ secrets.EMAIL_PASSWORD }}" \
             "fingsinz@foxmail.com" \
             "Tech Trending Daily" \
-            ${{ steps.trending.outputs.trendingData }}
+            ${{ steps.trending.outputs.trendingData }} \
+            "gmail"
