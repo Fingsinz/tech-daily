@@ -1,0 +1,44 @@
+name: Send Tech Trending Daily via Gmail
+
+on:
+  schedule:
+    - cron: '0 9 * * 6'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get Trending Data
+        uses: talljack/github-trending-email@main
+        id: trending
+        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          languages: '["", "cpp", "rust", "python"]'
+          enableHuggingFace: 'true'
+          enableHackerNews: 'true'
+          enableProductHunt: 'true'
+          enableAIPapers: 'true'
+          enableIndieHackers: 'true'
+          itemLimit: '15'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install yagmail
+
+      - name: Send email
+        run: |
+          python ./.github/actions/send_email.py \
+            "${{ secrets.GMAIL_USERNAME }}" \
+            "${{ secrets.GMAIL_PASSWORD }}" \
+            "fingsinz@foxmail.com" \
+            "Tech Trending Daily" \
+            ${{ steps.trending.outputs.trendingData }}
