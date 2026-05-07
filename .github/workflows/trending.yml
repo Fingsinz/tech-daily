@@ -42,4 +42,4 @@ jobs:
             "fingsinz@foxmail.com" \
             "Tech Trending Daily" \
             ${{ steps.trending.outputs.trendingData }} \
-            "gmail"
+            "foxmail"
